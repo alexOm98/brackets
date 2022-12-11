@@ -1,14 +1,9 @@
 module.exports = function check(str, bracketsConfig) {
-  let arr = bracketsConfig.map(x => x.join(''));
-  let i = 0
-  while (i < arr.length) {
-    if (str.indexOf(arr[i]) != -1) {
-      str = str.replace(arr[i], '');
-      i = 0;
-    } else {
-      i++;
-    }
+  const obj = Object.fromEntries(bracketsConfig);
+  const stack = [];
+  for (let i = 0; i < str.length; i++) {
+    str[i] === obj[stack.at(-1)] ? stack.pop() : stack.push(str[i]);
   }
-    return (str.length === 0);
-  }
+  return !stack.length
+}
   
